@@ -33,6 +33,7 @@ export default function CheckBoxes(props) {
     "The Times of India",
     "Moneycontrol",
     "Yahoo Entertainment",
+    "The Guardian",
     "ABC News",
     "BBC Sport",
     "Bloomberg",
@@ -51,8 +52,8 @@ export default function CheckBoxes(props) {
         margin: "30px 0",
       }}
     >
-      {sources.map((source) => (
-        <label key={source} className="checkbox">
+      {sources.map((source, i) => (
+        <label key={i} className="checkbox">
           <input
             type="checkbox"
             name={source}

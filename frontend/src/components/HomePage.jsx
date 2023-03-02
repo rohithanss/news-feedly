@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import CheckBoxes from "./CheckBoxes";
+import Loader from "./Loader";
 import NewsCard from "./NewsCard";
 
 export default function HomePage() {
@@ -61,11 +62,34 @@ export default function HomePage() {
   }
 
   function changeSources(newSources) {
+    setPage(1);
     setSources(newSources);
+  }
+
+  function searchByTitle() {
+    setPage(1);
+    setNewsData((curr) => {
+      let newObj = { ...curr };
+      newObj.status = null;
+      newObj.news = [];
+      return newObj;
+    });
+    getNewsData();
   }
   return (
     <>
-      <h1 style={{ textAlign: "center", margin: "20px 0" }}>News Feedly</h1>
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "center",
+          gap: "20px",
+          margin: "20px 0",
+          alignItems: "center",
+        }}
+      >
+        <img src="/logo.png" alt="logo" style={{ height: "50px" }} />
+      </div>
 
       <div
         style={{
@@ -122,13 +146,7 @@ export default function HomePage() {
             />
             <button
               onClick={() => {
-                setNewsData((curr) => {
-                  let newObj = { ...curr };
-                  newObj.status = null;
-                  newObj.news = [];
-                  return newObj;
-                });
-                getNewsData();
+                searchByTitle();
               }}
               style={{
                 padding: "8px 15px",
@@ -160,9 +178,11 @@ export default function HomePage() {
               }}
             >
               {newsData.status === null ? (
-                <h1>loading...</h1>
+                <Loader />
               ) : newsData.status === false ? (
-                <h1>Error...</h1>
+                <h1 style={{ color: "red" }}>
+                  Something Went Wrong While Loading news
+                </h1>
               ) : newsData.news.length > 0 ? (
                 newsData.news.map((el) => <NewsCard news={el} key={el._id} />)
               ) : (
