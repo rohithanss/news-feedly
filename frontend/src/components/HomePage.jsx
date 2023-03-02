@@ -13,7 +13,7 @@ export default function HomePage() {
   const getNewsData = async () => {
     try {
       let res = await axios.get(
-        `http://localhost:7070/news?search=${search}&sources=${sources}&limit=10&page=${page}`
+        `https://news-feedly.onrender.com/news?search=${search}&sources=${sources}&limit=10&page=${page}`
       );
 
       res = await res.data;
